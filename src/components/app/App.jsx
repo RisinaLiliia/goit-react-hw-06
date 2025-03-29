@@ -1,6 +1,6 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { addContact, deleteContact } from "../../redux/contactsSlice";
 import { changeFilter } from "../../redux/filtersSlice";
 import { Toaster } from "react-hot-toast";
 import debounce from "lodash.debounce";
@@ -34,9 +34,7 @@ export default function App() {
   };
 
   const handleChangeFilter = debounce((value) => {
-    if (value.trim()) {
-      dispatch(changeFilter(value));
-    }
+    dispatch(changeFilter(value));
   }, 500);
 
   const handleInputChange = (e) => {
@@ -61,20 +59,14 @@ export default function App() {
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
-
-      {/* Добавляем Suspense для ленивой загрузки */}
-      <Suspense fallback={<p>Loading form...</p>}>
+      <Suspense fallback={<p>Loading...</p>}>
         <ContactForm onAdd={addNewContact} />
-      </Suspense>
-
-      <Suspense fallback={<p>Loading search...</p>}>
         <SearchBox value={searchValue} onFilterChange={handleInputChange} />
+        <ContactList
+          contacts={filteredContacts}
+          onDelete={(id) => dispatch(deleteContact(id))}
+        />
       </Suspense>
-
-      <Suspense fallback={<p>Loading contacts...</p>}>
-        <ContactList contacts={filteredContacts} />
-      </Suspense>
-
       <Toaster />
     </div>
   );

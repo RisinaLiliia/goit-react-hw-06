@@ -23,7 +23,6 @@ export default function ContactForm({ onAdd }) {
     };
     onAdd(newContact);
     actions.resetForm();
-    document.getElementById("name").focus();
   };
 
   return (
