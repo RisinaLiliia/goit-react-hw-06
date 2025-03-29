@@ -23,6 +23,7 @@ export default function ContactForm({ onAdd }) {
     };
     onAdd(newContact);
     actions.resetForm();
+    document.getElementById("name").focus();
   };
 
   return (
@@ -33,14 +34,30 @@ export default function ContactForm({ onAdd }) {
     >
       <Form className={css.form}>
         <div className={css.group}>
-          <label className={css.label}>Name:</label>
-          <Field className={css.input} type="text" name="name" />
+          <label className={css.label} htmlFor="name">
+            Name:
+          </label>
+          <Field
+            className={css.input}
+            type="text"
+            name="name"
+            id="name"
+            aria-label="Enter the name of the contact"
+          />
           <ErrorMessage className={css.error} name="name" component="span" />
         </div>
 
         <div className={css.group}>
-          <label className={css.label}>Number:</label>
-          <Field className={css.input} type="tel" name="number" />
+          <label className={css.label} htmlFor="number">
+            Number:
+          </label>
+          <Field
+            className={css.input}
+            type="tel"
+            name="number"
+            id="number"
+            aria-label="Enter the phone number of the contact"
+          />
           <ErrorMessage className={css.error} name="number" component="span" />
         </div>
 

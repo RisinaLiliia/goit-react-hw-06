@@ -17,8 +17,6 @@ export default function App() {
 
   const [searchValue, setSearchValue] = useState(filter);
 
-  useEffect(() => {}, [contacts]);
-
   const addNewContact = (newContact) => {
     const contactExists = contacts.some(
       (contact) =>

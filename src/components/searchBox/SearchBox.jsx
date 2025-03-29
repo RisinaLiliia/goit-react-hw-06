@@ -13,11 +13,16 @@ export default function SearchBox() {
 
   return (
     <div className={css.searchBox}>
+      <label htmlFor="search-input" className={css.label}>
+        Search contacts:
+      </label>
       <input
         type="text"
+        id="search-input"
         placeholder="Search contacts..."
         onChange={handleFilterChange}
         className={css.input}
+        aria-label="Search contacts"
       />
     </div>
   );

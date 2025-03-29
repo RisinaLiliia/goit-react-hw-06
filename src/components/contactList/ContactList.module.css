@@ -12,11 +12,15 @@
   align-items: center;
   padding: 10px;
   border: 1px solid #ddd;
-  margin-bottom: 10px;
   border-radius: 5px;
   background-color: #f9f9f9;
   font-size: 16px;
   color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.contact:hover {
+  background-color: #f0f0f0;
 }
 
 .contactInfo {
@@ -37,8 +41,14 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   display: block;
+  font-size: 14px;
 }
 
-.deleteButton:hover {
+.deleteButton:hover,
+.deleteButton:focus {
   background-color: #ff3333;
+}
+
+.deleteButton:focus {
+  outline-offset: 2px;
 }
