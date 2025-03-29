@@ -43,6 +43,7 @@ export default function ContactForm({ onAdd }) {
             name="name"
             id="name"
             aria-label="Enter the name of the contact"
+            aria-required="true"
           />
           <ErrorMessage className={css.error} name="name" component="span" />
         </div>
@@ -57,11 +58,17 @@ export default function ContactForm({ onAdd }) {
             name="number"
             id="number"
             aria-label="Enter the phone number of the contact"
+            aria-required="true"
           />
           <ErrorMessage className={css.error} name="number" component="span" />
         </div>
 
-        <button className={css.button} type="submit">
+        <button
+          className={css.button}
+          type="submit"
+          aria-label="Add contact"
+          aria-live="polite"
+        >
           Add contact
         </button>
       </Form>
