@@ -1,14 +1,14 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { changeFilter } from "../../redux/filtersSlice";
-import css from "./SearchBox.module.css";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter } from '../../redux/filtersSlice';
+import css from './SearchBox.module.css';
 
 export default function SearchBox() {
   const dispatch = useDispatch();
+  const filter = useSelector((state) => state.filters.name);
 
   const handleFilterChange = (e) => {
-    const newFilter = e.target.value;
-    dispatch(changeFilter(newFilter));
+    dispatch(changeFilter(e.target.value));
   };
 
   return (
@@ -19,10 +19,10 @@ export default function SearchBox() {
       <input
         type="text"
         id="search-input"
-        placeholder="Search contacts..."
+        placeholder="Search by name..."
+        value={filter}
         onChange={handleFilterChange}
         className={css.input}
-        aria-label="Search contacts"
       />
     </div>
   );

@@ -1,33 +1,33 @@
-import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { v4 as uuidv4 } from "uuid";
-import css from "./ContactForm.module.css";
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
+import { resetFilter } from '../../redux/filtersSlice';
+import css from './ContactForm.module.css';
 
 const UserSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, "Must be at least 3 characters")
-    .max(50, "Must be 50 characters or less")
-    .required("This field is required"),
+    .min(3, 'Must be at least 3 characters')
+    .max(50, 'Must be 50 characters or less')
+    .required('This field is required'),
   number: Yup.string()
-    .matches(/^\+?\d{7,15}$/, "Invalid phone number")
-    .required("This field is required"),
+    .matches(/^[+]?[0-9]{7,15}$/, 'Invalid phone number')
+    .required('This field is required'),
 });
 
-export default function ContactForm({ onAdd }) {
+export default function ContactForm() {
+  const dispatch = useDispatch();
+
   const handleSubmit = (values, actions) => {
-    const newContact = {
-      id: uuidv4(),
-      name: values.name,
-      number: values.number,
-    };
-    onAdd(newContact);
+    dispatch(addContact({ name: values.name, number: values.number }));
+    dispatch(resetFilter()); // сбрасываем фильтр
     actions.resetForm();
   };
 
   return (
     <Formik
-      initialValues={{ name: "", number: "" }}
+      initialValues={{ name: '', number: '' }}
       validationSchema={UserSchema}
       onSubmit={handleSubmit}
     >
@@ -36,14 +36,7 @@ export default function ContactForm({ onAdd }) {
           <label className={css.label} htmlFor="name">
             Name:
           </label>
-          <Field
-            className={css.input}
-            type="text"
-            name="name"
-            id="name"
-            aria-label="Enter the name of the contact"
-            aria-required="true"
-          />
+          <Field className={css.input} type="text" name="name" id="name" />
           <ErrorMessage className={css.error} name="name" component="span" />
         </div>
 
@@ -51,23 +44,11 @@ export default function ContactForm({ onAdd }) {
           <label className={css.label} htmlFor="number">
             Number:
           </label>
-          <Field
-            className={css.input}
-            type="tel"
-            name="number"
-            id="number"
-            aria-label="Enter the phone number of the contact"
-            aria-required="true"
-          />
+          <Field className={css.input} type="tel" name="number" id="number" />
           <ErrorMessage className={css.error} name="number" component="span" />
         </div>
 
-        <button
-          className={css.button}
-          type="submit"
-          aria-label="Add contact"
-          aria-live="polite"
-        >
+        <button className={css.button} type="submit">
           Add contact
         </button>
       </Form>

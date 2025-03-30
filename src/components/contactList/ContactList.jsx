@@ -1,33 +1,20 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsSlice";
-import { showDeleteSuccessToast } from "../../utils/toasts";
-import css from "./ContactList.module.css";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import Contact from '../contact/Contact';
+import css from './ContactList.module.css';
 
-export default function ContactList({ contacts }) {
-  const dispatch = useDispatch();
+export default function ContactList() {
+  const contacts = useSelector((state) => state.contacts.items);
+  const filter = useSelector((state) => state.filters.name.toLowerCase());
 
-  const handleDelete = (id, name) => {
-    dispatch(deleteContact(id));
-    showDeleteSuccessToast(name);
-  };
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter)
+  );
 
   return (
     <ul className={css.contactList}>
-      {contacts.map((contact) => (
-        <li key={contact.id} className={css.contact}>
-          <div className={css.contactInfo}>
-            <span style={{ fontWeight: "bold" }}>{contact.name}</span>
-            <span>{contact.number}</span>
-          </div>
-          <button
-            className={css.deleteButton}
-            onClick={() => handleDelete(contact.id, contact.name)}
-            aria-label={`Delete contact ${contact.name}`}
-          >
-            Delete
-          </button>
-        </li>
+      {filteredContacts.map((contact) => (
+        <Contact key={contact.id} contact={contact} />
       ))}
     </ul>
   );
